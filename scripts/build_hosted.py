@@ -9,7 +9,7 @@ if OUTPUT.exists():
     shutil.rmtree(OUTPUT)
 shutil.copytree(SOURCE, OUTPUT)
 for page in [OUTPUT / 'workspace.html']:
-    html = page.read_text().replace('</head>', '<link rel="stylesheet" href="/hosted.css">\n</head>')
+    html = page.read_text().replace('Local workspace', 'Browser workspace').replace('</head>', '<link rel="stylesheet" href="/hosted.css">\n</head>')
     # Static build injection leaves the loopback application's templates unchanged.
     html = re.sub(r'(<script[^>]*src="/app.js")', r'<script src="/hosted.js" defer></script>\n\1', html, count=1)
     page.write_text(html)
