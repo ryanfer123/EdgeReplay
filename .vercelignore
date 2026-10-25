@@ -1,0 +1,11 @@
+cloud.config.json
+.env
+.env.*
+.venv/
+.git/
+**/__pycache__/
+*.sqlite3
+*.sqlite3-*
+.geotrace-cache/
+tests/
+public/

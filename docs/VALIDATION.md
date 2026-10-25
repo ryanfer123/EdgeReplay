@@ -51,3 +51,27 @@ motion or application scripts.
 
 No hardware, live CAN bus, trained model inference, Python/C++ prediction parity,
 vehicle fault-detection quality, or real-time playback accuracy has been verified.
+
+## Homepage and private cloud integration
+
+The homepage uses an actual synthetic-drive workspace capture and links to
+`/workspace`. Its workflow, input-format tabs, storage FAQ and product limits
+describe implemented behavior. Local recordings use SQLite; hosted active
+recordings are temporary browser-session data with optional private cloud copies.
+The Awwwards and frontend-design guidance informed the large Manrope hierarchy,
+ink opening, instrument preview, restrained transitions, and reduced-motion path.
+
+Browser QA at 1470px and 390px checked homepage navigation, CAN format tab, storage
+FAQ, workspace sample import (121 samples, four channels), and configured cloud
+dialog. No horizontal overflow or application console errors were observed.
+Snapshots: `screenshots/home-desktop.jpg` and `screenshots/home-mobile.jpg`.
+The browser capture API emits JPEG, so the files use that extension.
+
+The cloud recording adapter stores normalized CSV inputs and revalidates them
+through the ordinary import API on load. Node-to-Python roundtrip tests preserve
+quoted labels and raw CAN frame order, including same-time bursts. Tests reject
+unsupported/oversized envelopes and ensure invalid remote CSV is not persisted.
+Local server tests verify homepage/workspace/assets, uncached public config, and
+exact configured Supabase origin in CSP. The 39-test full suite passed. Browser
+QA did not create accounts or perform real authenticated cloud CRUD; shared
+service/RLS verification is recorded separately.

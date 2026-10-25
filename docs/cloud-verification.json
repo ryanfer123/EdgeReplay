@@ -1,0 +1,22 @@
+{
+  "project": "Wander-Sync",
+  "project_ref": "fcibqdxdjvzuxznjebdc",
+  "migrations_applied": [
+    "retrieval_lab_cloud_workspaces",
+    "edge_replay_cloud_workspaces",
+    "geotrace_cloud_workspaces"
+  ],
+  "verification": {
+    "owner_crud": true,
+    "cross_user_read_blocked": true,
+    "cross_user_update_delete_blocked": true,
+    "owner_transfer_blocked": true,
+    "spoofed_owner_insert_blocked": true,
+    "anonymous_select_insert_revoked": true,
+    "all_tables_rls": true,
+    "policy_count_per_table": 4,
+    "temporary_users_left": 0
+  },
+  "test_method": "Transaction with synthetic UUID users and authenticated role, all rolled back",
+  "advisors": "Authenticated GraphQL schema visibility advisory is expected for tables granted authenticated SELECT; row data remains protected by verified RLS. Original profiles/trips policies unchanged."
+}

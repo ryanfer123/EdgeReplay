@@ -9,3 +9,10 @@ dist/
 build/
 *.egg-info/
 .DS_Store
+
+# Local public cloud configuration
+cloud.config.json
+
+# Generated deployment output
+public/
+.vercel/

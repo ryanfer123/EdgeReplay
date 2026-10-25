@@ -418,3 +418,32 @@ window.addEventListener(
     notice(`Could not load the workspace: ${error.message}`, true);
   }
 })();
+
+// A cloud copy carries the CSV inputs required by the ordinary validator. Derived
+// graph/state objects from remote JSON are never trusted as a local recording.
+if (globalThis.CloudWorkspace && globalThis.EdgeReplayCloudAdapter) {
+  const cloud = CloudWorkspace.init({
+    kind: "EdgeReplay",
+    title: "Your saved recordings",
+    getSnapshot: async () => EdgeReplayCloudAdapter.snapshot(recording),
+    onLoad: async (payload) => {
+      const input = EdgeReplayCloudAdapter.restoreInput(payload);
+      const restored = await api("/api/recordings", input);
+      await refreshList(restored.id);
+      pause();
+      recording = restored;
+      renderRecording();
+      notice(
+        "Cloud recording opened and validated. A local copy is now available in this workspace.",
+      );
+    },
+  });
+  $("open-cloud").addEventListener("click", () => cloud.open());
+} else {
+  $("open-cloud")?.addEventListener("click", () =>
+    notice(
+      "Cloud storage is unavailable. Reload the workspace and try again.",
+      true,
+    ),
+  );
+}

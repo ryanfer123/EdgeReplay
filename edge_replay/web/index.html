@@ -3,7 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>EdgeReplay · Telemetry studio</title>
+    <meta
+      name="description"
+      content="Replay recorded telemetry, inspect CAN feature contracts, and find prediction disagreements in a local-first signal workbench."
+    />
+    <title>EdgeReplay · Keep the signal in context</title>
     <link rel="icon" href="/favicon.svg" />
     <link
       rel="preload"
@@ -13,160 +17,184 @@
       crossorigin
     />
     <link rel="stylesheet" href="/vendor/lenis.css" />
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/home.css" />
     <script src="/vendor/gsap.min.js" defer></script>
     <script src="/vendor/ScrollTrigger.min.js" defer></script>
     <script src="/vendor/lenis.min.js" defer></script>
-    <script src="/motion.js" defer></script>
-    <script src="/app.js" defer></script>
+    <script src="/home.js" defer></script>
   </head>
   <body>
-    <noscript
-      ><div class="noscript">
-        JavaScript enables replay controls. Use
-        <code
-          >python -m edge_replay --inspect recording.csv --output
-          recording.json</code
-        >
-        to inspect recordings without the browser.
-      </div></noscript
-    >
-    <header class="header">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
       <a class="brand" href="/" aria-label="EdgeReplay home"
         ><span class="brand-mark" aria-hidden="true">e<span>r</span></span
         >EdgeReplay</a
       >
-      <nav aria-label="Workspace navigation">
-        <a href="#signal-workspace">Signals</a><a href="#contracts">Contracts</a
-        ><a href="#predictions">Predictions</a>
+      <nav aria-label="Main navigation">
+        <a href="#workflow">How it works</a><a href="#formats">Formats</a
+        ><a href="#questions">Questions</a>
       </nav>
-      <div class="header-actions">
-        <span class="local"><i></i>Local workspace</span
-        ><button class="button primary" id="open-import">
-          Import recording
-          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-width="1.5"
-            >
-              <path
-                d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z"
-              />
-              <path d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15" />
-            </g>
-          </svg>
-        </button>
-      </div>
+      <a class="button header-cta" href="/workspace"
+        >Open workspace
+        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.5"
+            d="M6 18L18 6M18 15V6H9"
+          /></svg
+      ></a>
     </header>
-    <main>
-      <section class="hero">
-        <div>
-          <p class="intro-label">
-            <span></span> Record once. Investigate freely.
-          </p>
-          <h1 aria-label="Replay the signal. Inspect the edge.">
-            <span aria-hidden="true" class="word">Replay</span>
-            <span aria-hidden="true" class="word">the signal.</span><br /><span
-              aria-hidden="true"
-              class="word"
-              >Inspect</span
-            >
-            <span aria-hidden="true" class="word">the edge.</span>
-          </h1>
-        </div>
-        <div class="hero-note">
-          <span class="note-mark" aria-hidden="true">↳</span>
-          <p>
-            A workbench for the moments <br />between a sensor and a prediction.
-          </p>
-          <p class="muted">
-            Import a trace, slow it down, and find what changed.
-          </p>
-        </div>
-      </section>
-      <div id="notice" role="status" aria-live="polite" hidden></div>
-      <div class="recording-strip">
-        <div class="recording-select">
-          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-width="1.5"
-            >
-              <path d="M18 10L13 10" />
-              <path
-                d="M19.9998 6.23751C19.9989 5.94017 19.9946 5.76263 19.9743 5.60842C19.7971 4.26222 18.7378 3.2029 17.3916 3.02567C17.1966 3 16.9644 3 16.5 3H10"
-              />
-              <path
-                d="M2 6.94975C2 6.06722 2 5.62595 2.06935 5.25839C2.37464 3.64031 3.64031 2.37464 5.25839 2.06935C5.62595 2 6.06722 2 6.94975 2C7.33642 2 7.52976 2 7.71557 2.01738C8.51665 2.09229 9.27652 2.40704 9.89594 2.92051C10.0396 3.03961 10.1763 3.17633 10.4497 3.44975L11 4C11.8158 4.81578 12.2237 5.22367 12.7121 5.49543C12.9804 5.64471 13.2651 5.7626 13.5604 5.84678C14.0979 6 14.6747 6 15.8284 6H16.2021C17.9811 6 19.159 6 19.9998 6.23751C20.4031 6.35144 20.7288 6.52002 21.0062 6.76946C21.0849 6.84024 21.1598 6.91514 21.2305 6.99383C22 7.84935 22 9.16554 22 11.7979V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V6.94975Z"
-              />
-            </g>
-          </svg>
-          <div>
-            <label for="recording-select">Recording</label
-            ><select id="recording-select">
-              <option value="">No recording loaded</option>
-            </select>
+    <main id="main">
+      <div class="opening">
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-intro">
+            <p class="product-category">
+              <span class="signal-line"></span> The recorded-signal workbench
+            </p>
+            <div class="hero-heading-row">
+              <h1
+                id="hero-title"
+                aria-label="Find the moment. Keep the evidence."
+              >
+                <span aria-hidden="true" class="hero-word">Find</span>
+                <span aria-hidden="true" class="hero-word">the</span>
+                <span aria-hidden="true" class="hero-word">moment.</span
+                ><br /><span aria-hidden="true" class="hero-word">Keep</span>
+                <span aria-hidden="true" class="hero-word">the</span>
+                <span aria-hidden="true" class="hero-word">evidence.</span>
+              </h1>
+              <div class="hero-aside">
+                <p>There’s more to a recording<br />than a line on a chart.</p>
+                <a class="text-link" href="#preview"
+                  >Take a closer look
+                  <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      d="M12 4L12 20M6 14L12 20L18 14"
+                    /></svg
+                ></a>
+              </div>
+            </div>
+            <div class="hero-bottom">
+              <p class="hero-description">
+                Replay telemetry at your pace. Inspect the values behind a
+                spike, decode CAN feature pairs, and trace label disagreements
+                to the original timestamp.
+              </p>
+              <div class="hero-actions">
+                <a class="button primary" href="/workspace"
+                  >Explore the workspace
+                  <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+                    <g
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-width="1.5"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <path
+                        d="M15.4137 10.941C16.1954 11.4026 16.1954 12.5974 15.4137 13.059L10.6935 15.8458C9.93371 16.2944 9 15.7105 9 14.7868L9 9.21316C9 8.28947 9.93371 7.70561 10.6935 8.15419L15.4137 10.941Z"
+                      />
+                    </g></svg></a
+                ><span>No hardware connection needed.</span>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="recording-facts" id="recording-facts">
-          CSV signals or raw CAN frames
-        </div>
-        <div class="exports">
-          <button class="text-button" id="export-csv" disabled>
-            CSV
-            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-              <g
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-width="1.5"
-              >
-                <path
-                  d="M17 9.00195C19.175 9.01406 20.3529 9.11051 21.1213 9.8789C22 10.7576 22 12.1718 22 15.0002V16.0002C22 18.8286 22 20.2429 21.1213 21.1215C20.2426 22.0002 18.8284 22.0002 16 22.0002H8C5.17157 22.0002 3.75736 22.0002 2.87868 21.1215C2 20.2429 2 18.8286 2 16.0002L2 15.0002C2 12.1718 2 10.7576 2.87868 9.87889C3.64706 9.11051 4.82497 9.01406 7 9.00195"
-                />
-                <path
-                  stroke-linejoin="round"
-                  d="M12 2L12 15M15 11.5L12 15L9 11.5"
-                />
-              </g>
-            </svg></button
-          ><button class="text-button" id="export-json" disabled>
-            Session JSON
-            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-              <g
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-width="1.5"
-              >
-                <path
-                  d="M17 9.00195C19.175 9.01406 20.3529 9.11051 21.1213 9.8789C22 10.7576 22 12.1718 22 15.0002V16.0002C22 18.8286 22 20.2429 21.1213 21.1215C20.2426 22.0002 18.8284 22.0002 16 22.0002H8C5.17157 22.0002 3.75736 22.0002 2.87868 21.1215C2 20.2429 2 18.8286 2 16.0002L2 15.0002C2 12.1718 2 10.7576 2.87868 9.87889C3.64706 9.11051 4.82497 9.01406 7 9.00195"
-                />
-                <path
-                  stroke-linejoin="round"
-                  d="M12 2L12 15M15 11.5L12 15L9 11.5"
-                />
-              </g>
-            </svg>
-          </button>
-        </div>
+          <figure class="product-stage" id="preview">
+            <div class="stage-toolbar">
+              <span class="stage-title"
+                ><span class="small-mark" aria-hidden="true"></span> Inside the
+                signal room</span
+              ><span class="stage-tag">Actual product preview</span
+              ><a
+                href="/workspace"
+                class="stage-open"
+                aria-label="Open EdgeReplay workspace"
+                ><svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M6 18L18 6M18 15V6H9"
+                  /></svg
+              ></a>
+            </div>
+            <a
+              href="/workspace"
+              class="product-image-link"
+              aria-label="Open the workspace shown in this preview"
+              ><img
+                src="/product-preview.jpg"
+                alt="EdgeReplay signal room showing the speed waveform, replay transport and channel inspector for the bundled synthetic drive recording."
+                width="1470"
+                height="752"
+                fetchpriority="high"
+            /></a>
+            <figcaption>
+              <span
+                ><i class="fixture-dot" aria-hidden="true"></i>Bundled synthetic
+                drive. An example of the workflow, not a vehicle
+                measurement.</span
+              ><span>Recorded values. Inspectable context.</span>
+            </figcaption>
+          </figure>
+        </section>
       </div>
-      <section id="empty" class="empty">
-        <div>
-          <span class="empty-label">Your next investigation starts here</span>
-          <h2>Bring the recording.<br />Keep the context.</h2>
+      <section
+        class="workflow light-section"
+        id="workflow"
+        aria-labelledby="workflow-title"
+      >
+        <div class="section-intro">
+          <p class="section-label">A shorter path through the trace</p>
+          <h2 id="workflow-title">From a recording<br />to a reason.</h2>
           <p>
-            Replay sensor signals or decode CAN float pairs. Every channel,
-            frame, and disagreement stays tied to its original timestamp.
+            Keep the signal, its contract, and its labels in the same
+            investigation. Move through the recording without losing where a
+            value came from.
           </p>
-          <div class="empty-actions">
-            <button id="load-demo" class="button primary">
-              Explore sample drive
-              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+        </div>
+        <ol class="workflow-steps">
+          <li>
+            <div class="step-top">
+              <span class="step-number">01</span
+              ><svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-width="1.5"
+                >
+                  <path d="M18 10L13 10" />
+                  <path
+                    d="M19.9998 6.23751C19.9989 5.94017 19.9946 5.76263 19.9743 5.60842C19.7971 4.26222 18.7378 3.2029 17.3916 3.02567C17.1966 3 16.9644 3 16.5 3H10"
+                  />
+                  <path
+                    d="M2 6.94975C2 6.06722 2 5.62595 2.06935 5.25839C2.37464 3.64031 3.64031 2.37464 5.25839 2.06935C5.62595 2 6.06722 2 6.94975 2C7.33642 2 7.52976 2 7.71557 2.01738C8.51665 2.09229 9.27652 2.40704 9.89594 2.92051C10.0396 3.03961 10.1763 3.17633 10.4497 3.44975L11 4C11.8158 4.81578 12.2237 5.22367 12.7121 5.49543C12.9804 5.64471 13.2651 5.7626 13.5604 5.84678C14.0979 6 14.6747 6 15.8284 6H16.2021C17.9811 6 19.159 6 19.9998 6.23751C20.4031 6.35144 20.7288 6.52002 21.0062 6.76946C21.0849 6.84024 21.1598 6.91514 21.2305 6.99383C22 7.84935 22 9.16554 22 11.7979V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V6.94975Z"
+                  />
+                </g>
+              </svg>
+            </div>
+            <h3>Bring the recording.</h3>
+            <p>
+              Import a numeric signal CSV or a supported CAN float-pair trace.
+              Malformed rows are rejected with a useful explanation.
+            </p>
+            <span class="step-detail">CSV input · Saved sessions</span>
+          </li>
+          <li>
+            <div class="step-top">
+              <span class="step-number">02</span
+              ><svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
                 <g
                   fill="none"
                   stroke="currentColor"
@@ -178,258 +206,380 @@
                     d="M15.4137 10.941C16.1954 11.4026 16.1954 12.5974 15.4137 13.059L10.6935 15.8458C9.93371 16.2944 9 15.7105 9 14.7868L9 9.21316C9 8.28947 9.93371 7.70561 10.6935 8.15419L15.4137 10.941Z"
                   />
                 </g>
-              </svg></button
-            ><button id="load-can" class="button secondary">
-              Try CAN frames
-            </button>
-          </div>
-          <small
-            >Bundled samples are synthetic fixtures, not measurements from a
-            vehicle.</small
-          >
-        </div>
-        <div class="format-preview">
-          <div>
-            <span class="file-tab">recording.csv</span
-            ><span>Numeric signals</span>
-          </div>
-          <pre>
-time_ms,speed_kph,pack_temp_c
-0,12.5,28.0
-500,16.2,28.1
-1000,21.4,28.3</pre
-          >
-          <p>
-            This is an example of the input format.<br />Your waveform appears
-            after import.
-          </p>
-          <a href="/demo.csv" download>Download example CSV</a>
-        </div>
+              </svg>
+            </div>
+            <h3>Take your time.</h3>
+            <p>
+              Slow playback, choose a channel, and scrub to the moment that
+              matters. Step through individual samples when timing is close.
+            </p>
+            <span class="step-detail">Replay · Pause · Scrub · Step</span>
+          </li>
+          <li>
+            <div class="step-top">
+              <span class="step-number">03</span
+              ><svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-width="1.5"
+                >
+                  <circle cx="11.5" cy="11.5" r="9.5" />
+                  <path d="M18.2173 18.2178L21.9999 22.0004" />
+                </g>
+              </svg>
+            </div>
+            <h3>Inspect the evidence.</h3>
+            <p>
+              Read channel units and ranges, inspect CAN update ages, or jump to
+              a disagreement between labels in your recording.
+            </p>
+            <span class="step-detail">Contracts · Label pairs · Exports</span>
+          </li>
+        </ol>
       </section>
-      <section id="signal-workspace" class="work-area" hidden>
-        <div class="section-heading">
-          <div>
-            <h2>Signal room</h2>
-            <p id="recording-context"></p>
-          </div>
-          <span class="fixture-tag" id="mode-tag"></span>
+      <section
+        class="context-section light-section"
+        aria-labelledby="context-title"
+      >
+        <div class="context-copy">
+          <p class="section-label">A value is only part of the story</p>
+          <h2 id="context-title">Keep the context<br />beside the signal.</h2>
+          <p>
+            A carried-forward CAN value is different from a fresh update. A unit
+            mismatch is different from a surprising reading. EdgeReplay makes
+            those distinctions visible.
+          </p>
+          <a class="text-link ink-link" href="/workspace"
+            >Open an investigation
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M6 18L18 6M18 15V6H9"
+              /></svg
+          ></a>
         </div>
-        <div class="signal-grid">
-          <article class="signal-panel">
-            <div class="plot-heading">
-              <div>
-                <label for="channel-select">Viewing channel</label
-                ><select id="channel-select"></select>
-              </div>
-              <div class="current-reading">
-                <strong id="current-value">—</strong
-                ><span id="current-unit"></span>
-              </div>
-            </div>
-            <div class="chart-container">
-              <svg
-                id="signal-chart"
-                viewBox="0 0 1000 280"
-                role="img"
-                aria-label="Selected channel values over recording time"
-              ></svg>
-            </div>
-            <div class="transport">
-              <button class="play-button" id="play" aria-label="Play recording">
-                <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-                  <g
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-width="1.5"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path
-                      d="M15.4137 10.941C16.1954 11.4026 16.1954 12.5974 15.4137 13.059L10.6935 15.8458C9.93371 16.2944 9 15.7105 9 14.7868L9 9.21316C9 8.28947 9.93371 7.70561 10.6935 8.15419L15.4137 10.941Z"
-                    />
-                  </g></svg
-                ><span id="play-label">Play</span></button
-              ><button
-                class="icon-button"
-                id="restart"
-                aria-label="Return to start"
+        <div class="context-list">
+          <article>
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+              <g
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-width="1.5"
               >
-                <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-                  <path
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                    d="M18.364 8.04928L17.6569 7.34217C14.5327 4.21798 9.46734 4.21798 6.34315 7.34217C3.21895 10.4664 3.21895 15.5317 6.34315 18.6559C9.46734 21.7801 14.5327 21.7801 17.6569 18.6559C19.4737 16.8391 20.234 14.3658 19.9377 11.9995M18.364 3.80664V8.04928H14.1213"
-                  />
-                </svg></button
-              ><label class="scrubber"
-                ><span class="sr-only">Recording position</span
-                ><input
-                  id="seek"
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="1"
-                  value="0"
-                  aria-label="Recording position" /></label
-              ><span class="time-readout"
-                ><span id="position">0.000</span
-                ><span class="time-separator">/</span
-                ><span id="duration">0.000</span> s</span
-              ><label class="speed"
-                ><span class="sr-only">Replay speed</span
-                ><select id="speed" aria-label="Replay speed">
-                  <option value="0.25">0.25×</option>
-                  <option value="0.5">0.5×</option>
-                  <option value="1" selected>1×</option>
-                  <option value="2">2×</option>
-                  <option value="4">4×</option>
-                </select></label
-              ><button class="icon-button" id="step" aria-label="Next sample">
-                <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-                  <g
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-width="1.5"
-                  >
-                    <path
-                      d="M16.6598 9.35258C18.4467 10.5065 18.4467 13.4935 16.6598 14.6474L5.87083 21.6145C4.13419 22.736 2 21.2763 2 18.9671L2 5.0329C2 2.72368 4.13419 1.26402 5.87083 2.38548L16.6598 9.35258Z"
-                    />
-                    <path d="M22 5V19" />
-                  </g>
-                </svg>
-              </button>
-            </div>
-            <div class="plot-footer">
-              <span id="sample-position"></span
-              ><span>Recorded values. Browser-clock replay.</span>
+                <circle cx="12" cy="12" r="10" />
+                <path stroke-linejoin="round" d="M12 8V12L14.5 14.5" />
+              </g>
+            </svg>
+            <div>
+              <h3>Time stays attached.</h3>
+              <p>
+                CAN frame order is preserved even when timestamps repeat. The
+                inspector shows how old a channel value was at the selected
+                frame.
+              </p>
             </div>
           </article>
-          <aside class="inspector">
-            <div class="inspector-heading">
-              <h3>At this moment</h3>
-              <span id="inspector-time">0 ms</span>
+          <article>
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+              <g
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-width="1.5"
+              >
+                <path
+                  d="M4.04537 18.5083C2.68179 17.1448 2 16.463 2 15.6157C2 14.7685 2.68179 14.0867 4.04537 12.7231L12.7231 4.04537C14.0867 2.68179 14.7685 2 15.6157 2C16.463 2 17.1448 2.68179 18.5083 4.04537L19.9546 5.49167C21.3182 6.85525 22 7.53704 22 8.38426C22 9.23148 21.3182 9.91327 19.9546 11.2769L11.2769 19.9546C9.91327 21.3182 9.23148 22 8.38426 22C7.53704 22 6.85525 21.3182 5.49167 19.9546L4.04537 18.5083Z"
+                />
+                <path d="M8.46436 8.46448L9.87857 9.87869" />
+                <path d="M12.707 4.2218L14.1212 5.63602" />
+                <path d="M4.22168 12.7072L5.63589 14.1214" />
+                <path d="M6.34326 10.5858L8.46458 12.7071" />
+                <path d="M10.5859 6.34314L12.7073 8.46446" />
+              </g>
+            </svg>
+            <div>
+              <h3>Units stay explicit.</h3>
+              <p>
+                Known channels carry declared units. Unknown channels remain
+                unitless, and out-of-range values get notices rather than silent
+                corrections.
+              </p>
             </div>
-            <div id="live-values"></div>
-            <div id="frame-details" class="frame-details" hidden></div>
-            <p class="inspector-footnote">
-              CAN channels hold their last received value. Age shows time since
-              that channel was updated.
-            </p>
-          </aside>
+          </article>
+          <article>
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+              <g
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-width="1.5"
+              >
+                <path
+                  d="M3 10C3 6.22876 3 4.34315 4.17157 3.17157C5.34315 2 7.22876 2 11 2H13C16.7712 2 18.6569 2 19.8284 3.17157C21 4.34315 21 6.22876 21 10V14C21 17.7712 21 19.6569 19.8284 20.8284C18.6569 22 16.7712 22 13 22H11C7.22876 22 5.34315 22 4.17157 20.8284C3 19.6569 3 17.7712 3 14V10Z"
+                />
+                <path d="M8 12H16" />
+                <path d="M8 8H16" />
+                <path d="M8 16H13" />
+              </g>
+            </svg>
+            <div>
+              <h3>Exports keep the record.</h3>
+              <p>
+                Save the parsed session, source fingerprint, contracts, and
+                label comparison as JSON, or export an importable CSV.
+              </p>
+            </div>
+          </article>
         </div>
-        <div class="recording-summary" id="summary"></div>
       </section>
-      <section class="detail-section" id="contracts" hidden>
-        <div class="section-heading">
-          <div>
-            <h2>Channel contracts</h2>
-            <p>Check units and declared ranges before trusting a feature.</p>
-          </div>
-          <span class="quiet-badge" id="warning-count"></span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Channel</th>
-                <th>Unit</th>
-                <th>Minimum</th>
-                <th>Maximum</th>
-                <th>Mean</th>
-                <th>Samples</th>
-              </tr>
-            </thead>
-            <tbody id="channel-table"></tbody>
-          </table>
-        </div>
-        <div id="warnings"></div>
-        <details class="method-notes">
-          <summary>CAN decoding and timestamp rules</summary>
+      <section
+        class="formats-section"
+        id="formats"
+        aria-labelledby="formats-title"
+      >
+        <div class="formats-copy">
+          <p class="section-label">Two ways in</p>
+          <h2 id="formats-title">Small files.<br />Clear contracts.</h2>
           <p>
-            The included driver profile reads two little-endian IEEE 754 floats
-            per eight-byte frame: 0x300 = throttle variation + brake usage (%),
-            0x301 = energy (Wh/km) + regen efficiency (0..1), 0x302 = jerk
-            (m/s³) + padding. Unknown IDs and malformed payloads are rejected.
-            CAN timestamps may be equal; source order is retained. Signal
-            timestamps must strictly increase. A frame's update does not mean
-            every channel is fresh.
+            Start with the format you already record. The first release supports
+            numeric signals and one explicit CAN driver profile.
           </p>
-        </details>
-      </section>
-      <section class="detail-section" id="predictions" hidden>
-        <div class="section-heading">
-          <div>
-            <h2>Prediction inspection</h2>
-            <p>Compare labels already present in your recording.</p>
+          <div class="format-tabs" role="tablist" aria-label="Recording format">
+            <button
+              id="signals-tab"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="signals-format"
+            >
+              Signal CSV</button
+            ><button
+              id="can-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="can-format"
+              tabindex="-1"
+            >
+              CAN frames
+            </button>
           </div>
-          <span class="quiet-badge">No model execution</span>
+          <p class="format-limit">
+            Up to 20,000 rows and 3 MiB per recording. Up to 12 numeric signal
+            channels.
+          </p>
         </div>
-        <div id="audit"></div>
+        <div
+          class="format-panel"
+          id="signals-format"
+          role="tabpanel"
+          aria-labelledby="signals-tab"
+        >
+          <div class="file-header">
+            <span class="file-dot"></span><span>signals.csv</span
+            ><a href="/demo.csv" download
+              >Download example
+              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-width="1.5"
+                >
+                  <path
+                    d="M17 9.00195C19.175 9.01406 20.3529 9.11051 21.1213 9.8789C22 10.7576 22 12.1718 22 15.0002V16.0002C22 18.8286 22 20.2429 21.1213 21.1215C20.2426 22.0002 18.8284 22.0002 16 22.0002H8C5.17157 22.0002 3.75736 22.0002 2.87868 21.1215C2 20.2429 2 18.8286 2 16.0002L2 15.0002C2 12.1718 2 10.7576 2.87868 9.87889C3.64706 9.11051 4.82497 9.01406 7 9.00195"
+                  />
+                  <path
+                    stroke-linejoin="round"
+                    d="M12 2L12 15M15 11.5L12 15L9 11.5"
+                  />
+                </g></svg
+            ></a>
+          </div>
+          <pre><code>time_ms,speed_kph,pack_temp_c
+0,12.5,28.0
+500,16.2,28.1
+1000,21.4,28.3</code></pre>
+          <div class="format-caption">
+            <span>One row per sample.</span>
+            <p>
+              Time is in milliseconds and strictly increasing. Every channel
+              value must be numeric and finite.
+            </p>
+          </div>
+        </div>
+        <div
+          class="format-panel"
+          id="can-format"
+          role="tabpanel"
+          aria-labelledby="can-tab"
+        >
+          <div class="file-header">
+            <span class="file-dot"></span><span>can-frames.csv</span
+            ><a href="/example-can.csv" download
+              >Download example
+              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-width="1.5"
+                >
+                  <path
+                    d="M17 9.00195C19.175 9.01406 20.3529 9.11051 21.1213 9.8789C22 10.7576 22 12.1718 22 15.0002V16.0002C22 18.8286 22 20.2429 21.1213 21.1215C20.2426 22.0002 18.8284 22.0002 16 22.0002H8C5.17157 22.0002 3.75736 22.0002 2.87868 21.1215C2 20.2429 2 18.8286 2 16.0002L2 15.0002C2 12.1718 2 10.7576 2.87868 9.87889C3.64706 9.11051 4.82497 9.01406 7 9.00195"
+                  />
+                  <path
+                    stroke-linejoin="round"
+                    d="M12 2L12 15M15 11.5L12 15L9 11.5"
+                  />
+                </g></svg
+            ></a>
+          </div>
+          <pre><code>time_ms,can_id,data_hex
+0,0x300,0000704100002041
+0,0x301,00000c430000803e
+1,0x302,0000003f00000000</code></pre>
+          <div class="format-caption">
+            <span>Eight bytes. Two floats.</span>
+            <p>
+              The included profile decodes IDs 0x300–0x302 as little-endian
+              float pairs. Repeated timestamps keep source order. This is not a
+              general DBC parser.
+            </p>
+          </div>
+        </div>
       </section>
-      <footer>
-        <span>Keep the evidence close.</span
+      <section
+        class="questions-section light-section"
+        id="questions"
+        aria-labelledby="questions-title"
+      >
+        <div class="section-intro">
+          <p class="section-label">Before you open a trace</p>
+          <h2 id="questions-title">A few useful<br />distinctions.</h2>
+          <p>Clear limits make a better instrument.</p>
+        </div>
+        <div class="questions-list">
+          <details>
+            <summary>
+              Does replay send data to my device?<span
+                class="question-symbol"
+                aria-hidden="true"
+                >+</span
+              >
+            </summary>
+            <p>
+              No. Replay moves through a recorded file in the browser. It does
+              not connect to a CAN bus, transmit frames, or control hardware.
+              Browser-clock playback is not a real-time timing guarantee.
+            </p>
+          </details>
+          <details>
+            <summary>
+              Does EdgeReplay run my model?<span
+                class="question-symbol"
+                aria-hidden="true"
+                >+</span
+              >
+            </summary>
+            <p>
+              No. The prediction panel compares <code>expected_label</code> and
+              <code>predicted_label</code> columns already present in a signal
+              CSV. It reports agreement and disagreement locations. It does not
+              execute uploaded code or establish accuracy on an independent test
+              set.
+            </p>
+          </details>
+          <details>
+            <summary>
+              Can I inspect my own channels?<span
+                class="question-symbol"
+                aria-hidden="true"
+                >+</span
+              >
+            </summary>
+            <p>
+              Yes. Use a <code>time_ms</code> column and up to 12 numeric
+              channel columns. Recognized names get declared units; other names
+              remain unitless. Missing numeric values and malformed rows are
+              rejected instead of filled with guesses.
+            </p>
+          </details>
+          <details>
+            <summary>
+              Where are my recordings saved?<span class="question-symbol" aria-hidden="true">+</span>
+            </summary>
+            <p>When run locally, recordings stay in SQLite on your computer.
+              The hosted workspace keeps active recordings temporarily in your browser session.
+              Export a file or sign in through Cloud to save a private Supabase copy
+              before closing the hosted session. Cloud copies are optional.</p>
+          </details>
+          <details>
+            <summary>
+              Can I use it without a browser?<span
+                class="question-symbol"
+                aria-hidden="true"
+                >+</span
+              >
+            </summary>
+            <p>
+              The Python command-line inspector validates a CSV and exports a
+              parsed JSON recording:
+              <code
+                >python -m edge_replay --inspect recording.csv --output
+                recording.json</code
+              >. The interactive replay workspace needs JavaScript.
+            </p>
+          </details>
+        </div>
+      </section>
+      <section class="closing">
+        <div>
+          <p class="section-label">The next moment is in the recording</p>
+          <h2>Bring a trace.<br />See what it tells you.</h2>
+        </div>
+        <div>
+          <a class="button primary" href="/workspace"
+            >Open EdgeReplay
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M6 18L18 6M18 15V6H9"
+              /></svg
+          ></a>
+          <p>Start with a synthetic sample<br />or import your own CSV.</p>
+        </div>
+      </section>
+      <footer class="site-footer">
+        <a class="brand" href="/">EdgeReplay</a
+        ><span>Recorded telemetry, kept in context.</span
         ><a
           href="https://github.com/ryanfer123/EdgeReplay"
           target="_blank"
           rel="noreferrer"
-          >Source & documentation ↗</a
-        ><span>EdgeReplay 0.1</span>
+          >Source & documentation
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M6 18L18 6M18 15V6H9"
+            /></svg
+        ></a>
       </footer>
     </main>
-    <dialog id="import-dialog">
-      <form id="import-form">
-        <div class="dialog-heading">
-          <h2>Import a recording</h2>
-          <button
-            type="button"
-            class="icon-button close-dialog"
-            aria-label="Close import dialog"
-          >
-            ×
-          </button>
-        </div>
-        <p>
-          Upload signal CSV or raw CAN frames. Data stays in your local
-          workspace.
-        </p>
-        <label for="recording-name">Recording name</label
-        ><input
-          id="recording-name"
-          type="text"
-          required
-          maxlength="100"
-          placeholder="Morning drive · controller A"
-        /><label class="file-label" for="csv-file"
-          >Choose CSV file<input
-            id="csv-file"
-            type="file"
-            accept=".csv,text/csv" /></label
-        ><label for="csv-text">Or paste CSV</label
-        ><textarea
-          id="csv-text"
-          rows="7"
-          spellcheck="false"
-          required
-          placeholder="time_ms,speed_kph,pack_temp_c&#10;0,12.5,28&#10;500,16.2,28.1"
-        ></textarea>
-        <p class="import-help">
-          Up to 20,000 rows, 12 channels, 3 MiB.
-          <a href="/demo.csv" download>Signal example</a> /
-          <a href="/example-can.csv" download>CAN example</a>
-        </p>
-        <p id="import-error" role="alert" hidden></p>
-        <div class="dialog-actions">
-          <button type="button" class="button secondary close-dialog">
-            Cancel</button
-          ><button type="submit" id="save-import" class="button primary">
-            Import recording
-          </button>
-        </div>
-      </form>
-    </dialog>
   </body>
 </html>

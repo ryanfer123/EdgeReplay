@@ -8,8 +8,8 @@ between labels already recorded by your model pipeline.
 
 ## Run
 
-Python 3.10+ is sufficient. No Python runtime packages, account, hardware connection,
-API key, or model download is required.
+Python 3.10+ is sufficient for local use. No Python runtime packages, account,
+hardware connection, API key, or model download is required for the local tools.
 
 ```sh
 git clone https://github.com/ryanfer123/EdgeReplay.git
@@ -17,13 +17,18 @@ cd EdgeReplay
 python3 -m edge_replay
 ```
 
-Open **http://127.0.0.1:8766**. Choose **Explore sample drive** for a 60-second
+Open **http://127.0.0.1:8766** for the homepage, then **Open workspace**
+(or go directly to **http://127.0.0.1:8766/workspace**). Choose
+**Explore sample drive** for a 60-second
 synthetic recording or **Try CAN frames** for the included driver feature profile.
 Both examples are generated fixtures, not real vehicle measurements.
 
 The app binds to loopback, checks Host headers, and rejects cross-origin writes.
-It is a single-user local workbench, with recordings saved in SQLite. It has no
-user-account system, remote-device control, or internet deployment configuration.
+Local recordings are saved in SQLite. Optional Supabase sign-in stores private
+recording copies across devices. Hosted deployment keeps active recordings in
+temporary browser-session storage; save a cloud copy or export CSV before closing
+the session. See [deployment](DEPLOYMENT.md) and [cloud setup](SUPABASE.md).
+Remote-device control is not implemented.
 
 ## What works
 
@@ -36,6 +41,18 @@ user-account system, remote-device control, or internet deployment configuration
 - Compare optional expected/predicted labels and jump to disagreements.
 - Reopen saved recordings and export session JSON or importable CSV.
 - Validate and inspect a recording from the terminal.
+
+## Private cloud copies
+
+The workspace **Cloud** button supports email sign-in and private recording copies
+when Supabase is configured. Each copy contains normalized, restorable CSV inputs.
+Loading a copy runs the ordinary parser and validation again before adding it to
+the current workspace. Signal values, labels, and raw CAN frame order are retained.
+Normalized CSV can have a different checksum from the original source; keep the
+original file when byte-level provenance matters. The source fingerprint stored
+with a cloud copy is informational and does not replace validation.
+
+Local operation remains available without cloud configuration.
 
 ## Signal CSV format
 

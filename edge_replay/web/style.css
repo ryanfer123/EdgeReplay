@@ -1389,3 +1389,63 @@ dialog .import-help {
     opacity: 1 !important;
   }
 }
+
+/* Shared cloud controls inherit this workspace's instrument palette. */
+.cloud-dialog {
+  --cloud-ink: #20314a;
+  --cloud-muted: #718095;
+  --cloud-line: #d4dfed;
+  background: #f7faff;
+  font-family: Manrope, "Segoe UI", sans-serif;
+  border-radius: 12px;
+}
+.cloud-dialog .cloud-header small {
+  color: #647fa8;
+  letter-spacing: 0.08em;
+}
+.cloud-dialog .cloud-status {
+  color: #397e6c;
+}
+.cloud-dialog .cloud-status.cloud-error {
+  color: #a4533d;
+}
+.cloud-dialog button {
+  background: #e8effa;
+  color: #294b7b;
+  border-color: #cbd9eb;
+  border-radius: 5px;
+}
+.cloud-dialog button:hover {
+  background: #dce7f7;
+}
+.cloud-dialog input {
+  background: white;
+  color: #20314a;
+  border-color: #c8d5e6;
+  border-radius: 5px;
+}
+.cloud-dialog label {
+  color: #5f7392;
+}
+.cloud-dialog .cloud-delete {
+  color: #9b6756;
+}
+.cloud-dialog :focus-visible {
+  outline-color: #8fb3ff;
+}
+.cloud-dialog .cloud-close {
+  background: transparent;
+}
+.cloud-workspace-button {
+  box-shadow: none;
+}
+@media (max-width: 600px) {
+  .header-actions {
+    gap: 8px;
+  }
+  .cloud-workspace-button {
+    font-size: 9px !important;
+    min-height: 37px !important;
+    padding: 8px 10px !important;
+  }
+}

@@ -13,6 +13,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from . import __version__
+from .cloud import cloud_config
 from .telemetry import canonical_json, parse_trace
 
 WEB = Path(__file__).parent / "web"
@@ -63,9 +64,14 @@ class Handler(SimpleHTTPRequestHandler):
     def end_headers(self):
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("Cache-Control", "no-store")
+        config = cloud_config()
+        connect_sources = "'self'"
+        if config.get("configured"):
+            connect_sources += " " + config["url"]
         self.send_header(
             "Content-Security-Policy",
-            "default-src 'self'; style-src 'self'; script-src 'self'; object-src 'none'; frame-ancestors 'none'",
+            "default-src 'self'; style-src 'self'; script-src 'self'; "
+            f"connect-src {connect_sources}; object-src 'none'; frame-ancestors 'none'",
         )
         super().end_headers()
 
@@ -99,7 +105,12 @@ class Handler(SimpleHTTPRequestHandler):
         if not self.valid_host():
             return
         url = urlsplit(self.path)
-        if url.path == "/api/recordings":
+        if url.path == "/api/cloud/config":
+            self.respond(dict(cloud_config(), hosted=False))
+        elif url.path in ("/workspace", "/workspace/"):
+            self.path = "/workspace.html"
+            super().do_GET()
+        elif url.path == "/api/recordings":
             with connect(self.database) as db:
                 rows = db.execute(
                     "SELECT id,created,body FROM recordings ORDER BY created DESC"
@@ -150,6 +161,12 @@ class Handler(SimpleHTTPRequestHandler):
                 "/",
                 "/style.css",
                 "/app.js",
+                "/home.css",
+                "/home.js",
+                "/product-preview.jpg",
+                "/cloud.css",
+                "/cloud.js",
+                "/cloud-adapter.js",
                 "/motion.js",
                 "/demo.csv",
                 "/example-can.csv",

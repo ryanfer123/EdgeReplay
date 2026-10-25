@@ -20,3 +20,11 @@ license notices. No invented endorsements or measured results.
 3. Build replay, pause, speed, scrub, channel selection and signal plots.
 4. Compare optional expected/predicted labels and expose disagreements.
 5. Test parser/math/HTTP/persistence, build a wheel, and inspect desktop/mobile UI.
+
+## Homepage and workspace separation
+
+The application now gets a dedicated introductory page. Preserve the existing
+instrument in `workspace.html`, link the main calls to action to `/workspace`, and
+use `home.css`/`home.js` only for the landing page. The concrete design direction is
+recorded in `docs/HOMEPAGE-DESIGN.md`. The server/API and cloud integration are
+coordinated separately; this change does not alter telemetry behavior.
