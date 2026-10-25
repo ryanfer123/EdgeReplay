@@ -11,6 +11,14 @@
   },
   "rewrites": [
     {
+      "source": "/workspace",
+      "destination": "/workspace.html"
+    },
+    {
+      "source": "/workspace/",
+      "destination": "/workspace.html"
+    },
+    {
       "source": "/api/:path*",
       "destination": "/api/index.py?route=:path*"
     }
